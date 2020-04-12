@@ -4,20 +4,20 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import org.testng.asserts.*;
 
-public class openSiteTest {
+@Listeners(ExecutionListener.class)
+public class OpenSiteTest {
 
     protected static WebDriver driver;
-    private static final Logger logger = LogManager.getLogger(openSiteTest.class);
+    private static final Logger logger = LogManager.getLogger(OpenSiteTest.class);
     private ServerConfig cfg = ConfigFactory.create(ServerConfig.class);
 
     @BeforeTest
@@ -35,7 +35,8 @@ public class openSiteTest {
         driver.manage().window().maximize();
         logger.info("Запущен драйвер для " + cfg.browser());
     }
-    @Test
+
+    @Test(description = "Checking logo on main page")
     public void testOTUS(){
         driver.get(cfg.url());
         MainPage mainPage = new MainPage(driver);                        //создаём экземпляр главной страницы
