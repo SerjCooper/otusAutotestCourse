@@ -7,4 +7,8 @@ public interface ServerConfig extends Config{
 
     @Key("url")
     String url();
+
+    @Key("browser")
+    @DefaultValue("chrome")
+    String browser();
 }

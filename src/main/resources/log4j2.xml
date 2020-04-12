@@ -5,10 +5,20 @@
             <PatternLayout
                     pattern="%highlight{[%d{HH:mm:ss.SSS}] | %-5p | %-32.42t | %-32.42c{1} | %m%n}{FATAL=red blink, ERROR=red blink, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}"/>
         </Console>
+        <RollingFile name="RollingFile" filename="log/Test.txt"
+                     filepattern="${logPath}/%d{dd_MM_YYYY_HHmmss}.txt">
+            <PatternLayout
+                    pattern="%highlight{[%d{HH:mm:ss.SSS}] | %-5p | %-32.42t | %-32.42c{1} | %m%n}{FATAL=red blink, ERROR=red blink, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+        </RollingFile>
     </Appenders>
     <Loggers>
         <Root level="info">
-        <AppenderRef ref="Console"/>
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
         </Root>
     </Loggers>
 </Configuration>
