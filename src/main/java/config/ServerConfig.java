@@ -11,4 +11,10 @@ public interface ServerConfig extends Config{
     @Key("browser")
     @DefaultValue("chrome")
     String browser();
+
+    @Key("URL_YA_MARKET")
+    String urlYaMarket();
+
+    @Key("TIMEOUT_IMPLICITLY")
+    int timeout_implicitly();
 }
