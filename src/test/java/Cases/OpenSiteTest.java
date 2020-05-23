@@ -1,4 +1,7 @@
+package Cases;
+
 import Sites.Otus.Pages.MainPage;
+import Utils.WebDriverFactory;
 import config.ServerConfig;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.logging.log4j.LogManager;
@@ -16,7 +19,7 @@ import org.testng.annotations.*;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 
-//@Listeners(ExecutionListener.class)
+//@Listeners(Utils.ExecutionListener.class)
 public class OpenSiteTest {
 
     protected WebDriver driver;

@@ -1,5 +1,6 @@
 package Sites.Yandex.Market.Pages;
 
+import Sites.BasePage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -12,22 +13,20 @@ import org.testng.Assert;
 
 import java.util.List;
 
-public class CatalogPage {
+public class CatalogPage extends BasePage {
 
-    protected WebDriver driver;
     protected WebDriverWait wait;
-    protected static int timeOutExpWait = 10;
+    protected final int timeOutExpWait = 10;
     protected FilterModule filterModule;
 
     private static final Logger logger = LogManager.getLogger(CatalogPage.class);
 
-    private static String catalogCell = "//div/a[contains(@title, '%n')]";                //%n - параметр имени бренда для поиска по каталогу, например Honor
-    private static String catalogCellCompareButton = "//div[contains(@data-bem, '%n')]";                //%n - параметр имени бренда для добавления к сравнению, например Honor
-    private static By popupCompareCloseButtonXpath = By.xpath("//div[contains(@class, 'image_name_close')]");
-    private static By popupCompareTitleXpath = By.xpath("//div[@class='popup-informer__title']");
+    private final String catalogCell = "//div/a[contains(@title, '%n')]";                //%n - параметр имени бренда для поиска по каталогу, например Honor
+    private final String catalogCellCompareButton = "//div[contains(@data-bem, '%n')]";                //%n - параметр имени бренда для добавления к сравнению, например Honor
+    private final By popupCompareTitleXpath = By.xpath("//div[@class='popup-informer__title']");
 
     public CatalogPage(WebDriver driver){
-        this.driver = driver;
+        super(driver);
         this.filterModule = new FilterModule(driver);
         this.wait = new WebDriverWait(driver, timeOutExpWait);
     }

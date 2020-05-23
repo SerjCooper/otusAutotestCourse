@@ -1,5 +1,6 @@
 package Sites.Yandex.Market.Pages;
 
+import Sites.BasePage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -9,20 +10,19 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class FilterModule {
+public class FilterModule extends BasePage {
 
-    protected static WebDriver driver;
     protected WebDriverWait wait;
-    protected static int timeOutExpWait = 10;
+    protected final int timeOutExpWait = 10;
 
     private static final Logger logger = LogManager.getLogger(FilterModule.class);
 
     private String manufactCheckBoxXpath = "//legend[text()='Производитель']/following-sibling::ul//span[text()='%s']/..";   //%s - параметр для указания компании производителя
-    private static String sortByTempXpath = "//a[text()='%t']";                                                              //$t - параметр для указания способа сортировки, например "по цене"
-    private static By popupMessageForSortXpath = By.xpath("//div[@class='popup2__content']/div");
+    private String sortByTempXpath = "//a[text()='%t']";                                                              //$t - параметр для указания способа сортировки, например "по цене"
+    private final By popupMessageForSortXpath = By.xpath("//div[@class='popup2__content']/div");
 
     public FilterModule(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         this.wait = new WebDriverWait(driver, timeOutExpWait);
     }
 
@@ -48,6 +48,5 @@ public class FilterModule {
         driver.findElement(By.xpath(sortByTempXpath.replace("%t", sorter))).click();
         wait.until(ExpectedConditions.invisibilityOfElementLocated(popupMessageForSortXpath));
     }
-
 
 }
