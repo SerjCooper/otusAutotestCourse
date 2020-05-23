@@ -1,4 +1,7 @@
+package Cases;
+
 import Sites.Yandex.Market.Pages.*;
+import Utils.WebDriverFactory;
 import config.ServerConfig;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.logging.log4j.LogManager;

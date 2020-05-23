@@ -1,5 +1,6 @@
 package Sites.Yandex.Market.Pages;
 
+import Sites.BasePage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -9,23 +10,22 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class MainPage {
+public class MainPage extends BasePage {
 
-    protected static WebDriver driver;
-    protected static WebDriverWait wait;
-    protected static int timeOutExpWait = 10;
+    protected WebDriverWait wait;
+    protected final int timeOutExpWait = 10;
 
     private static final Logger logger = LogManager.getLogger(MainPage.class);
 
-    private static By allCategoriesButtonXpath = By.xpath("//span[text()='Все категории']/ancestor::button");
-    private static String categoryTempTabXpath = "//div[@role='tabpanel']//span[text()='%c']";                          //%c - текст искомой категории, например Электроника
-    private static String SectionTempXpath = "//div[@role='tabpanel']//a[text()='%s']";                                 //%s - текст искомого раздела, например Мобильные телефоны
-    private static By verticalTabListXpath = By.xpath("//div[@role='tablist' and @aria-orientation='vertical']");       //вертикальное меню категорий
-    private static By popupMessageForSearchXpath = By.xpath("//div[@class='popup2__content']/div");
-    private static By compareButtonXpath = By.xpath("//div[contains(@data-apiary-widget-id, 'compareButton')]");
+    private final By allCategoriesButtonXpath = By.xpath("//span[text()='Каталог товаров']/ancestor::button");
+    private final String categoryTempTabXpath = "//div[@role='tabpanel']//span[text()='%c']";                          //%c - текст искомой категории, например Электроника
+    private final String SectionTempXpath = "//div[@role='tabpanel']//a[text()='%s']";                                 //%s - текст искомого раздела, например Мобильные телефоны
+    private final By verticalTabListXpath = By.xpath("//div[@role='tablist' and @aria-orientation='vertical']");       //вертикальное меню категорий
+    private final By popupMessageForSearchXpath = By.xpath("//div[@class='popup2__content']/div");
+    private final By compareButtonXpath = By.xpath("//div[contains(@data-apiary-widget-id, 'compareButton')]");
 
     public MainPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         this.wait = new WebDriverWait(driver, timeOutExpWait);
     }
 
