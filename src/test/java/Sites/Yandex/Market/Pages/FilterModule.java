@@ -1,6 +1,7 @@
 package Sites.Yandex.Market.Pages;
 
 import Sites.BasePage;
+import Utils.Browser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -17,12 +18,15 @@ public class FilterModule extends BasePage {
 
     private static final Logger logger = LogManager.getLogger(FilterModule.class);
 
+    private Browser browser;
+
     private String manufactCheckBoxXpath = "//legend[text()='Производитель']/following-sibling::ul//span[text()='%s']/..";   //%s - параметр для указания компании производителя
     private String sortByTempXpath = "//a[text()='%t']";                                                              //$t - параметр для указания способа сортировки, например "по цене"
     private final By popupMessageForSortXpath = By.xpath("//div[@class='popup2__content']/div");
 
-    public FilterModule(WebDriver driver) {
-        super(driver);
+    public FilterModule(Browser browser) {
+        super(browser.getDriver());
+        this.browser = browser;
         this.wait = new WebDriverWait(driver, timeOutExpWait);
     }
 

@@ -1,6 +1,7 @@
 package Sites.Yandex.Market.Pages;
 
 import Sites.BasePage;
+import Utils.Browser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -21,13 +22,16 @@ public class CatalogPage extends BasePage {
 
     private static final Logger logger = LogManager.getLogger(CatalogPage.class);
 
+    private Browser browser;
+
     private final String catalogCell = "//div/a[contains(@title, '%n')]";                //%n - параметр имени бренда для поиска по каталогу, например Honor
     private final String catalogCellCompareButton = "//div[contains(@data-bem, '%n')]";                //%n - параметр имени бренда для добавления к сравнению, например Honor
     private final By popupCompareTitleXpath = By.xpath("//div[@class='popup-informer__title']");
 
-    public CatalogPage(WebDriver driver){
-        super(driver);
-        this.filterModule = new FilterModule(driver);
+    public CatalogPage(Browser browser){
+        super(browser.getDriver());
+        this.browser = browser;
+        this.filterModule = new FilterModule(browser);
         this.wait = new WebDriverWait(driver, timeOutExpWait);
     }
 

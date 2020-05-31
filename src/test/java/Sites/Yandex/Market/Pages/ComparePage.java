@@ -1,6 +1,7 @@
 package Sites.Yandex.Market.Pages;
 
 import Sites.BasePage;
+import Utils.Browser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -18,14 +19,17 @@ public class ComparePage extends BasePage {
 
     private static final Logger logger = LogManager.getLogger(ComparePage.class);
 
+    private Browser browser;
+
     private final By compareContentXpath = By.xpath("//a[contains(@class, 'n-compare-head__name')]");
     private final By showAllFeaturesButtonXpath = By.xpath("//span[contains(@class, 'n-compare-show-controls__all')]");
     private final By showDiffFeaturesButtonXpath = By.xpath("//span[contains(@class, 'n-compare-show-controls__diff')]");
     private final By featureRowXpath = By.xpath("//div[contains(@class, 'n-compare-row-name')]");
     private final By GeneralFeaturesGroupTitleXpath = By.xpath("//div[text()='Общие характеристики']");
 
-    public ComparePage(WebDriver driver){
-        super(driver);
+    public ComparePage(Browser browser){
+        super(browser.getDriver());
+        this.browser = browser;
         this.wait = new WebDriverWait(driver, timeOutExpWait);
     }
 

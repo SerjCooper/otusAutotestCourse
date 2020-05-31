@@ -70,8 +70,13 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M4</version>
                 <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>otusTest.xml</suiteXmlFile>
+                    </suiteXmlFiles>
                     <systemPropertyVariables>
                         <browser>chrome</browser>
+                        <otusLogin></otusLogin>
+                        <otusPass></otusPass>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
