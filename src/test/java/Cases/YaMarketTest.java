@@ -1,6 +1,7 @@
 package Cases;
 
 import Sites.Yandex.Market.Pages.*;
+import Utils.Browser;
 import Utils.WebDriverFactory;
 import config.ServerConfig;
 import org.aeonbits.owner.ConfigFactory;
@@ -20,45 +21,16 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 //homework #3
 public class YaMarketTest {
 
-    protected WebDriver driver;
     private static final Logger logger = LogManager.getLogger(YaMarketTest.class);
     private ServerConfig cfg = ConfigFactory.create(ServerConfig.class);
-    private String browserName;
-
-    @BeforeSuite
-    public void browserInit(){
-        logger.info("Инициализация Suite");
-        browserName = System.getProperty("browser").replace("'", "");   //забираем параметр введенный через maven
-        browserName = browserName.toUpperCase();
-        logger.info(browserName);
-
-        if(browserName.isEmpty())                                                   //браузер устанавливается в порядке приоритета:
-            if(!cfg.browser().isEmpty())                                            //1. параметра в консоли
-                browserName = cfg.browser();                                        //2. параметра в Pom.xml
-            else{                                                                   //3. config.properties
-                logger.error("Имя браузера не задано");                          //и если нигде мы не нашли название браузера, кидаем исключение
-                throw new NullPointerException("Имя браузера не задано");
-            }
-    }
+    private String browserName;                                                             //параметр для прямого указания браузера из теста
+    private Browser browser;
 
     @BeforeTest
-    public void setUp() throws NullPointerException {
+    public void setUp() {
         logger.info("Инициализация теста");
-
-        switch (browserName){
-            case ("FIREFOX"):
-                //   FirefoxOptions firefoxOptions = new FirefoxOptions();
-                //   firefoxOptions.addArguments("--incognito");                              //здесь будут какие либо опции
-                driver = WebDriverFactory.create(browserName);
-                break;
-            default:
-                ChromeOptions chromeOptions = new ChromeOptions();                    //для включения ChromeOptions раскоменть это
-                chromeOptions.addArguments("disable-extensions");
-                driver = WebDriverFactory.create(browserName, chromeOptions);
-                break;
-        }
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(cfg.timeout_implicitly(), SECONDS);
+        this.browser = new Browser();
+        browser.setUp();
     }
 
     @Test
@@ -73,8 +45,8 @@ public class YaMarketTest {
         brandNames.add("Honor");
         //-----Конец входных параметров
 
-        driver.get(cfg.urlYaMarket());
-        MainPage mainPage = new MainPage(driver);
+        browser.getUrl(cfg.urlYaMarket());
+        MainPage mainPage = new MainPage(browser);
 
         //Открываем весь каталог, переходим в требуемую категорию и раздел
         CatalogPage catalog = mainPage.goToSection(category, section);
@@ -88,7 +60,7 @@ public class YaMarketTest {
 
         //Добавляем первые найденные товары. Вместо brandNames можно передать список конкретных моделей
         catalog.addFirstToCompareList(brandNames);
-        ComparePage comparePage = mainPage.openComparePage(driver);
+        ComparePage comparePage = mainPage.openComparePage(browser);
 
         //Проверяем, что на странице сравнения товаров столько сколько было отмечено в каталоге
         Assert.assertEquals(comparePage.getProductCount(), brandNames.size());
@@ -106,8 +78,6 @@ public class YaMarketTest {
 
     @AfterTest
     public void quit(){
-        if(driver != null)
-            driver.quit();
-        logger.info("Драйвер завершил работу");
+        browser.quit();
     }
 }
