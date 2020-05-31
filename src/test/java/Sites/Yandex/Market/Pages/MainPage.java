@@ -1,6 +1,7 @@
 package Sites.Yandex.Market.Pages;
 
 import Sites.BasePage;
+import Utils.Browser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -17,6 +18,8 @@ public class MainPage extends BasePage {
 
     private static final Logger logger = LogManager.getLogger(MainPage.class);
 
+    private Browser browser;
+
     private final By allCategoriesButtonXpath = By.xpath("//span[text()='Каталог товаров']/ancestor::button");
     private final String categoryTempTabXpath = "//div[@role='tabpanel']//span[text()='%c']";                          //%c - текст искомой категории, например Электроника
     private final String SectionTempXpath = "//div[@role='tabpanel']//a[text()='%s']";                                 //%s - текст искомого раздела, например Мобильные телефоны
@@ -24,8 +27,9 @@ public class MainPage extends BasePage {
     private final By popupMessageForSearchXpath = By.xpath("//div[@class='popup2__content']/div");
     private final By compareButtonXpath = By.xpath("//div[contains(@data-apiary-widget-id, 'compareButton')]");
 
-    public MainPage(WebDriver driver) {
-        super(driver);
+    public MainPage(Browser browser) {
+        super(browser.getDriver());
+        this.browser = browser;
         this.wait = new WebDriverWait(driver, timeOutExpWait);
     }
 
@@ -75,11 +79,11 @@ public class MainPage extends BasePage {
         //переходим в выбранный раздел
         elementSection.click();
 
-        return new CatalogPage(driver);
+        return new CatalogPage(browser);
     }
 
-    public ComparePage openComparePage(WebDriver driver){
+    public ComparePage openComparePage(Browser browser){
         driver.findElement(compareButtonXpath).click();
-        return new ComparePage(driver);
+        return new ComparePage(browser);
     }
 }
